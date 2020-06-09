@@ -1,0 +1,87 @@
+body {
+    font-family: Arial;
+}
+.range {
+    width: 300px;
+}
+.city-heading,
+.categories-heading,
+.price-heading{
+    font-size: 17px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: Arial;
+}
+.price-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+.price {
+    margin-top: 10px;
+    font-weight: 700;
+}
+.filter-button {
+    background-color: #1cb8ff;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 6px 6px 3px 6px;
+}
+.city-name {
+    color: #fff;
+    margin-top: -24px;
+    padding-left: 9px;
+}
+.card-heading {
+    width: 200px;
+    font-size: 17px;
+    margin: 10px 0 0 10px;
+    font-weight: 600;
+    line-height: 18px;
+}
+.card-category {
+    color: #a6a9af;
+    margin: 15px 0 0 10px;
+}
+.block {
+    width: 250px;
+    margin-right: 15px;
+}
+.mask {
+    background-color: blue;
+    opacity: 0.5;
+}
+.block img {
+    width: 250px;
+}
+.card-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+.card-price {
+    margin: 15px 10px 0 0;
+}
+.blocks-wrapper {
+    display: flex;
+    padding-top: 30px;
+    width: 70%;
+}
+.background-footer {
+    margin-top: 20px;
+}
+.MuiCheckbox-colorSecondary.Mui-checked {
+    color: grey !important;
+}
+.MuiSlider-root {
+    color: #1cb8ff !important;
+}
+.MuiSlider-rail {
+    height: 4px;
+}
+.MuiSlider-thumb {
+    background-color: #fff !important;
+    border: 2px solid #1cb8ff !important;
+}
+.city-dropdown {
+    margin-bottom: 15px;
+}
