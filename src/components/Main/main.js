@@ -7,10 +7,14 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
-import cardImage from "../img/cardImage.jpg"
 import Category from "../../data/category"
+import Data from "../../data/data"
+import cityImg1 from "../img/cityImg1.jpg"
+import cityImg2 from "../img/cityImg2.jpg"
+import cityImg3 from "../img/cityImg3.jpg"
+import cityImg4 from "../img/cityImg4.jpg"
+import cityImg5 from "../img/cityImg5.jpg"
 import './main.css';
-import {city} from "../../data/city";
 
 const useStyles = theme => ({
     root: {
@@ -29,14 +33,97 @@ const useStyle = makeStyles(theme => ({
 
  class Main extends Component {
     state = {
-        value: [20, 37],
+        value: [35, 200],
         isCheck: false,
         age: "",
-        name: "hai"
+        name: "hai",
+        checkBox: [
+            { Architecture:false},
+            { Business:false},
+            { Design:false},
+            { Marketing:false},
+            { Photography:false}
+        ],
+        data: [
+		{
+			id:1,
+			name:'Affiliate Marketing - A Beginners Guide to Earning online1',
+			city:1,
+			category:2,
+			price:50,
+			cityName: 'London',
+			nameOfCategory:'Architecture',
+			img: cityImg1,
+            isCheck:false
+		},
+        {
+			id:2,
+			name:'Affiliate Marketing - A Beginners Guide to Earning online2',
+			city:4,
+			category:1,
+			price:100,
+			cityName: 'Paris',
+			nameOfCategory:'Business',
+			img: cityImg2,
+            isCheck:false
+		},
+        {
+			id:3,
+			name:'Affiliate Marketing - A Beginners Guide to Earning online3',
+			city:5,
+			category:1,
+			price:1,
+			cityName: 'New York',
+			nameOfCategory:'Design',
+			img: cityImg3,
+            isCheck:false
+		},
+		{
+			id:4,
+			name:'Affiliate Marketing - A Beginners Guide to Earning online4',
+			city:2,
+			category:4,
+			price:150,
+			cityName: 'Tokio',
+			nameOfCategory:'Marketing',
+			img: cityImg4,
+            isCheck:false
+		},
+		{
+			id:5,
+			name:'Affiliate Marketing - A Beginners Guide to Earning online5',
+			city:3,
+			category:5,
+			price:200,
+			cityName: 'Madrid',
+			nameOfCategory:'Photography',
+			img: cityImg5,
+            isCheck:false
+		}
+    ]
     };
-    changeCheckBox = e => {
+    changeCheckBox = name => {
+        console.log('name', name);
+        this.state.checkBox.map((item) => {
+            const rezAfterFilter = this.state.checkBox(item => (item.cityName === this.state.age &&
+                item.price >= this.state.value[0] && item.price <= this.state.value[1]));
+            // console.log('rez', rezAfterFilter);
+            this.setState({
+                data: rezAfterFilter
+            });
+            // const priceRez = Data.filter(item => item.price >= this.state.value[0] && item.price <= this.state.value[1]);
+            // console.log('rez', priceRez);
+            // this.setState({
+            //     data: priceRez
+            // });
+            // const categoryRez = Data.filter(item => item.nameOfCategory === this.state.age);
+            // this.setState({
+            //     data: categoryRez
+            // });
+        });
         this.setState({
-            [e.target.name]: e.target.checked
+            // [e.target.name]: e.target.checked,
+            isCheck: !this.state.isCheck
         });
     };
 
@@ -54,27 +141,73 @@ const useStyle = makeStyles(theme => ({
              [name]: event.target.value
          });
      };
-     ChangeShowFavorite = () => {
-         this.setState({showFavorite: !this.state.showFavorite});
+     FilterButtonClick = () => {
+         // const rez = [];
+         Data.map((item) => {
+             const rezAfterFilter = Data.filter(item => (item.cityName === this.state.age &&
+                 item.price >= this.state.value[0] && item.price <= this.state.value[1]));
+             // console.log('rez', rezAfterFilter);
+             this.setState({
+                 data: rezAfterFilter
+             });
+             // const priceRez = Data.filter(item => item.price >= this.state.value[0] && item.price <= this.state.value[1]);
+             // console.log('rez', priceRez);
+             // this.setState({
+             //     data: priceRez
+             // });
+             // const categoryRez = Data.filter(item => item.nameOfCategory === this.state.age);
+             // this.setState({
+             //     data: categoryRez
+             // });
+         });
+
+
      };
     render() {
-        console.log(Category);
+        console.log(this.state.data);
+        if (this.state.data.length===0) {
+        }
         const { classes } = this.props;
-        const clazz = this.props;
-        const {isCheck} = this.state;
         const categories = Category.map((item) => {
             return (
-                <div className="categories-block">
+                <div className="categories-block"
+                     key={item.id}>
                     <div className="categories-dropdown">
                         <div className="check-box">
                             <FormControlLabel
                                 control={
                                     <Checkbox
                                         checked={this.showFavorite}
-                                        onChange={this.changeCheckBox}/>
+                                        onChange={() => this.changeCheckBox(item.name)}/>
                                 }
                                 label={item.name}
                             />
+                        </div>
+                    </div>
+                </div>
+            );
+        });
+        const cardInfo = this.state.data.map((item) => {
+            return (
+                <div className="block"
+                key={item.id}>
+                    <div className="city-img">
+                        <img src={item.img}/>
+                    </div>
+                    <div className="city-name">
+                        {item.cityName}
+                    </div>
+                    <div className="city-text-wrapper">
+                        <div className="card-heading">
+                            {item.name}
+                        </div>
+                        <div className="card-info-wrapper">
+                            <div className="card-category">
+                                {item.nameOfCategory}
+                            </div>
+                            <div className="card-price">
+                                { '$' + item.price}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -113,7 +246,9 @@ const useStyle = makeStyles(theme => ({
                         <div className="categories-heading">
                             Categories
                         </div>
-                        <div>{categories}</div>
+                        <div>
+                            {categories}
+                        </div>
                         <div className="price-block">
                             <div className="price-heading">
                                 Price
@@ -128,13 +263,16 @@ const useStyle = makeStyles(theme => ({
                                         valueLabelDisplay="auto"
                                         aria-labelledby="range-slider"
                                         getAriaValueText={this.valuetext}
+                                        min={0}
+                                        max={250}
                                     />
                                 </div>
                                 <div className="price-wrapper">
                                     <div className="price">
                                         {'$' + this.state.value[0] + '   -   ' + '$' + this.state.value[1]}
                                     </div>
-                                    <div className="filter-button">
+                                    <div className="filter-button"
+                                    onClick={this.FilterButtonClick}>
                                         Filter
                                     </div>
                                 </div>
@@ -142,111 +280,8 @@ const useStyle = makeStyles(theme => ({
                         </div>
                     </div>
                     <div className="main-info">
-                        <div className="blocks-wrapper">
-                            <div className="block">
-                                <img src={cardImage}/>
-                                <div className="city-name">
-                                    London
-                                </div>
-                                <div className="card-heading">
-                                    Affiliate Marketing - A Beginners Guide to Earning online
-                                </div>
-                                <div className="card-wrapper">
-                                    <div className="card-category">
-                                        Architechture
-                                    </div>
-                                    <div className="card-price">
-                                        $115
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="block">
-                                <img src={cardImage}/>
-                                <div className="city-name">
-                                    London
-                                </div>
-                                <div className="card-heading">
-                                    Affiliate Marketing - A Beginners Guide to Earning online
-                                </div>
-                                <div className="card-wrapper">
-                                    <div className="card-category">
-                                        Architechture
-                                    </div>
-                                    <div className="card-price">
-                                        $115
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="block">
-                                <img src={cardImage}/>
-                                <div className="city-name">
-                                    London
-                                </div>
-                                <div className="card-heading">
-                                    Affiliate Marketing - A Beginners Guide to Earning online
-                                </div>
-                                <div className="card-wrapper">
-                                    <div className="card-category">
-                                        Architechture
-                                    </div>
-                                    <div className="card-price">
-                                        $115
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="blocks-wrapper">
-                            <div className="block">
-                                <img src={cardImage}/>
-                                <div className="city-name">
-                                    London
-                                </div>
-                                <div className="card-heading">
-                                    Affiliate Marketing - A Beginners Guide to Earning online
-                                </div>
-                                <div className="card-wrapper">
-                                    <div className="card-category">
-                                        Architechture
-                                    </div>
-                                    <div className="card-price">
-                                        $115
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="block">
-                                <img src={cardImage}/>
-                                <div className="city-name">
-                                    London
-                                </div>
-                                <div className="card-heading">
-                                    Affiliate Marketing - A Beginners Guide to Earning online
-                                </div>
-                                <div className="card-wrapper">
-                                    <div className="card-category">
-                                        Architechture
-                                    </div>
-                                    <div className="card-price">
-                                        $115
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="block">
-                                <img src={cardImage}/>
-                                <div className="city-name">
-                                    London
-                                </div>
-                                <div className="card-heading">
-                                    Affiliate Marketing - A Beginners Guide to Earning online
-                                </div>
-                                <div className="card-wrapper">
-                                    <div className="card-category">
-                                        Architechture
-                                    </div>
-                                    <div className="card-price">
-                                        $115
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="card-wrapper">
+                            {cardInfo}
                         </div>
                     </div>
 
