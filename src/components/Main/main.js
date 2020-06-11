@@ -10,11 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import city from "../../data/city"
 import Category from "../../data/category"
-import filterIcon from "../img/filter-icon.png"
 import Data from "../../data/data"
 import './main.css';
 
-const useStyles = theme => ({
+const useStyles = () => ({
     root: {
         width: 300,
     },
@@ -158,11 +157,10 @@ makeStyles(theme => ({
         });
         return (
             <div className="page-wrapper">
-                {/*<div className="background"/>*/}
                 <div className="blocks-wrapper">
                     <div className="filter-icon"
                          onClick={this.onMenuClick}>
-                        <i className="fa fa-filter"></i>
+                        <i className="fa fa-filter"/>
                     </div>
                     <div className="container" style={{display: this.state.menuIsOpen ? 'none' : 'block'}}>
                         <div className="city-block">
@@ -215,7 +213,8 @@ makeStyles(theme => ({
                                         {'$' + this.state.value[0] + '   -   ' + '$' + this.state.value[1]}
                                     </div>
                                     <div className="filter-button"
-                                         onClick={this.FilterButtonClick}>
+                                         onClick={this.FilterButtonClick}
+                                        onChange={this.onMenuClick}>
                                         Filter
                                     </div>
                                 </div>
@@ -230,9 +229,8 @@ makeStyles(theme => ({
                         </div>
                     }
                 </div>
-                {/*<div className="background background-footer"/>*/}
             </div>
         );
     }
-};
+}
 export default withStyles(useStyles)(Main)
