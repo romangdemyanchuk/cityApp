@@ -4,16 +4,14 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { withStyles, makeStyles  } from '@material-ui/core/styles';
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
+import EmptyCitiesList from "../EmptyCitiesList";
 import Select from "@material-ui/core/Select";
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
+import city from "../../data/city"
 import Category from "../../data/category"
+import filterIcon from "../img/filter-icon.png"
 import Data from "../../data/data"
-import cityImg1 from "../img/cityImg1.jpg"
-import cityImg2 from "../img/cityImg2.jpg"
-import cityImg3 from "../img/cityImg3.jpg"
-import cityImg4 from "../img/cityImg4.jpg"
-import cityImg5 from "../img/cityImg5.jpg"
 import './main.css';
 
 const useStyles = theme => ({
@@ -21,7 +19,7 @@ const useStyles = theme => ({
         width: 300,
     },
 });
-const useStyle = makeStyles(theme => ({
+makeStyles(theme => ({
     formControl: {
         margin: theme.spacing(1),
         minWidth: 120
@@ -35,103 +33,25 @@ const useStyle = makeStyles(theme => ({
     state = {
         value: [35, 200],
         isCheck: false,
-        age: "",
+        cityName: "",
         name: "hai",
-        checkBox: [
-            { Architecture:false},
-            { Business:false},
-            { Design:false},
-            { Marketing:false},
-            { Photography:false}
-        ],
-        data: [
-		{
-			id:1,
-			name:'Affiliate Marketing - A Beginners Guide to Earning online1',
-			city:1,
-			category:2,
-			price:50,
-			cityName: 'London',
-			nameOfCategory:'Architecture',
-			img: cityImg1,
-            isCheck:false
-		},
-        {
-			id:2,
-			name:'Affiliate Marketing - A Beginners Guide to Earning online2',
-			city:4,
-			category:1,
-			price:100,
-			cityName: 'Paris',
-			nameOfCategory:'Business',
-			img: cityImg2,
-            isCheck:false
-		},
-        {
-			id:3,
-			name:'Affiliate Marketing - A Beginners Guide to Earning online3',
-			city:5,
-			category:1,
-			price:1,
-			cityName: 'New York',
-			nameOfCategory:'Design',
-			img: cityImg3,
-            isCheck:false
-		},
-		{
-			id:4,
-			name:'Affiliate Marketing - A Beginners Guide to Earning online4',
-			city:2,
-			category:4,
-			price:150,
-			cityName: 'Tokio',
-			nameOfCategory:'Marketing',
-			img: cityImg4,
-            isCheck:false
-		},
-		{
-			id:5,
-			name:'Affiliate Marketing - A Beginners Guide to Earning online5',
-			city:3,
-			category:5,
-			price:200,
-			cityName: 'Madrid',
-			nameOfCategory:'Photography',
-			img: cityImg5,
-            isCheck:false
-		}
-    ]
-    };
-    changeCheckBox = name => {
-        console.log('name', name);
-        this.state.checkBox.map((item) => {
-            const rezAfterFilter = this.state.checkBox(item => (item.cityName === this.state.age &&
-                item.price >= this.state.value[0] && item.price <= this.state.value[1]));
-            // console.log('rez', rezAfterFilter);
-            this.setState({
-                data: rezAfterFilter
-            });
-            // const priceRez = Data.filter(item => item.price >= this.state.value[0] && item.price <= this.state.value[1]);
-            // console.log('rez', priceRez);
-            // this.setState({
-            //     data: priceRez
-            // });
-            // const categoryRez = Data.filter(item => item.nameOfCategory === this.state.age);
-            // this.setState({
-            //     data: categoryRez
-            // });
-        });
-        this.setState({
-            // [e.target.name]: e.target.checked,
-            isCheck: !this.state.isCheck
-        });
+        checkBox: [],
+        categories: [],
+        data: Data,
+        menuIsOpen:false
     };
 
+     onMenuClick = () => {
+         this.setState(({menuIsOpen}) => {
+             return {
+                 menuIsOpen:!menuIsOpen
+             };
+         });
+     };
     valuetext = (value) => {
-        return `${value}°C`;
+        return `${value}`;
     };
     handleChange = (event, newValue) => {
-        console.log(newValue)
         this.setState({value: newValue});
     };
      handleChanges = event => {
@@ -141,33 +61,56 @@ const useStyle = makeStyles(theme => ({
              [name]: event.target.value
          });
      };
+     toogleCategory = (id) => {
+         if(this.state.categories.includes(id))
+         {
+             const idx = this.state.categories.findIndex((el) => el === id);
+             const newArr = [
+                 ...this.state.categories.slice(0, idx),
+                 ...this.state.categories.slice(idx +1)
+             ];
+             this.setState({categories: newArr});
+         }
+         else
+         {
+             const newArr = [
+                 ...this.state.categories,id
+             ];
+             this.setState({categories: newArr})
+         }
+     };
      FilterButtonClick = () => {
-         // const rez = [];
-         Data.map((item) => {
-             const rezAfterFilter = Data.filter(item => (item.cityName === this.state.age &&
-                 item.price >= this.state.value[0] && item.price <= this.state.value[1]));
-             // console.log('rez', rezAfterFilter);
-             this.setState({
-                 data: rezAfterFilter
-             });
-             // const priceRez = Data.filter(item => item.price >= this.state.value[0] && item.price <= this.state.value[1]);
-             // console.log('rez', priceRez);
-             // this.setState({
-             //     data: priceRez
-             // });
-             // const categoryRez = Data.filter(item => item.nameOfCategory === this.state.age);
-             // this.setState({
-             //     data: categoryRez
-             // });
-         });
-
-
+             const rezAfterFilter = Data.filter(item =>
+                 (
+                     ((this.state.cityName)
+                         ? item.cityName === this.state.cityName
+                         : true
+                     )
+                 )
+             ).filter(item =>
+                 (
+                     ((this.state.categories.length)
+                         ?  this.state.categories.includes(item.category)
+                         :  true
+                     )
+                 )
+             ).filter(item =>
+                 (
+                     ((this.state.value[0] !== this.state.value[1])
+                         ?  item.price >= this.state.value[0] && item.price <= this.state.value[1]
+                         :  true
+                     )
+                 )
+             );
+         this.setState({data: rezAfterFilter})
      };
     render() {
-        console.log(this.state.data);
-        if (this.state.data.length===0) {
-        }
         const { classes } = this.props;
+        const cities = city.map((item) => {
+            return (
+                    <option key={item.id}>{item.name}</option>
+            );
+        });
         const categories = Category.map((item) => {
             return (
                 <div className="categories-block"
@@ -177,8 +120,8 @@ const useStyle = makeStyles(theme => ({
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        checked={this.showFavorite}
-                                        onChange={() => this.changeCheckBox(item.name)}/>
+                                        onChange={() =>this.toogleCategory(item.id)}
+                                    />
                                 }
                                 label={item.name}
                             />
@@ -192,7 +135,7 @@ const useStyle = makeStyles(theme => ({
                 <div className="block"
                 key={item.id}>
                     <div className="city-img">
-                        <img src={item.img}/>
+                        <img src={item.img} alt="city-img"/>
                     </div>
                     <div className="city-name">
                         {item.cityName}
@@ -214,30 +157,30 @@ const useStyle = makeStyles(theme => ({
             );
         });
         return (
-            <div>
-                <div className="background"/>
+            <div className="page-wrapper">
+                {/*<div className="background"/>*/}
                 <div className="blocks-wrapper">
-                    <div className="container">
+                    <div className="filter-icon"
+                         onClick={this.onMenuClick}>
+                        <i className="fa fa-filter"></i>
+                    </div>
+                    <div className="container" style={{display: this.state.menuIsOpen ? 'none' : 'block'}}>
                         <div className="city-block">
                             <div className="city-dropdown">
                                 <div>
                                     <FormControl className={classes.formControl}>
-                                        <InputLabel htmlFor="age-native-simple">City</InputLabel>
+                                        <InputLabel htmlFor="cityName-native-simple">City</InputLabel>
                                         <Select
                                             native
-                                            value={this.state.age}
+                                            value={this.state.cityName}
                                             onChange={this.handleChanges}
                                             inputProps={{
-                                                name: "age",
-                                                id: "age-native-simple"
+                                                name: "cityName",
+                                                id: "cityName-native-simple"
                                             }}
                                         >
                                             <option aria-label="None" value="" />
-                                            <option>London</option>
-                                            <option>Madrid</option>
-                                            <option>New York</option>
-                                            <option>Paris</option>
-                                            <option>Tokio</option>
+                                            {cities}
                                         </Select>
                                     </FormControl>
                                 </div>
@@ -272,24 +215,24 @@ const useStyle = makeStyles(theme => ({
                                         {'$' + this.state.value[0] + '   -   ' + '$' + this.state.value[1]}
                                     </div>
                                     <div className="filter-button"
-                                    onClick={this.FilterButtonClick}>
+                                         onClick={this.FilterButtonClick}>
                                         Filter
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="main-info">
-                        <div className="card-wrapper">
-                            {cardInfo}
+                    {this.state.data.length === 0 ? <EmptyCitiesList/> :
+                        <div className="main-info">
+                            <div className="card-wrapper">
+                                {cardInfo}
+                            </div>
                         </div>
-                    </div>
-
+                    }
                 </div>
-                <div className="background background-footer"/>
+                {/*<div className="background background-footer"/>*/}
             </div>
         );
     }
 };
-
 export default withStyles(useStyles)(Main)

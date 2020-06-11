@@ -10,8 +10,8 @@ const Data = [
 			city:1,
 			category:2,
 			price:50,
-			cityName: 'London',
-			nameOfCategory:'Architecture',
+			cityName: 'London', //to remove
+			nameOfCategory:'Architecture', // to remove
 			img: cityImg1
 		},
 		{
