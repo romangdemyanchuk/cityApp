@@ -4,7 +4,6 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { withStyles, makeStyles  } from '@material-ui/core/styles';
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import EmptyCitiesList from "../EmptyCitiesList";
 import Select from "@material-ui/core/Select";
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
@@ -221,7 +220,7 @@ makeStyles(theme => ({
                             </div>
                         </div>
                     </div>
-                    {this.state.data.length === 0 ? <EmptyCitiesList/> :
+                    {this.state.data.length   !== 0 &&
                         <div className="main-info">
                             <div className="card-wrapper">
                                 {cardInfo}

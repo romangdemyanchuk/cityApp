@@ -1,8 +1,8 @@
-import cityImg1 from "../components/img/cityImg1.jpg"
-import cityImg2 from "../components/img/cityImg2.jpg"
-import cityImg3 from "../components/img/cityImg3.jpg"
-import cityImg4 from "../components/img/cityImg4.jpg"
-import cityImg5 from "../components/img/cityImg5.jpg"
+import cityImg1 from "../img/cityImg1.jpg"
+import cityImg2 from "../img/cityImg2.jpg"
+import cityImg3 from "../img/cityImg3.jpg"
+import cityImg4 from "../img/cityImg4.jpg"
+import cityImg5 from "../img/cityImg5.jpg"
 const Data = [
 		{
 			id:1,
