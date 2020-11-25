@@ -2,7 +2,7 @@
   "name": "pokemons",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://romangdemyanchuk.github.io/cityApp/.",
+  "homepage": "https://romangdemyanchuk.github.io/cityApp/",
   "dependencies": {
     "@material-ui/core": "^4.10.1",
     "@material-ui/lab": "^4.0.0-alpha.51",
