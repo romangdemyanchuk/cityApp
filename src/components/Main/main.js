@@ -220,7 +220,7 @@ makeStyles(theme => ({
                             </div>
                         </div>
                     </div>
-                    {this.state.data.length   !== 0 &&
+                    {this.state.data.length === 0 ? <div className="empty">Empty</div> :
                         <div className="main-info">
                             <div className="card-wrapper">
                                 {cardInfo}

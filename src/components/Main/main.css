@@ -92,6 +92,11 @@ body {
     font-size: 15px;
     font-weight: 600;
 }
+.empty {
+    width: 100%;
+    text-align: center;
+    margin-top: 3%;
+}
 .blocks-wrapper {
     display: flex;
     background-color: #fff;
