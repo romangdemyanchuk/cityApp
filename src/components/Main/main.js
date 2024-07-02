@@ -214,6 +214,7 @@ class Main extends Component {
                                 </div>
                                 <div className='price-wrapper'>
                                     <div className='price'>
+                                        {/* eslint-disable-next-line no-useless-concat */}
                                         {'$' + this.state.value[0] + '   -   ' + '$' + this.state.value[1]}
                                     </div>
                                     <div className='filter-button'
